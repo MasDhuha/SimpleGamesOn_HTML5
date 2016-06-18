@@ -1,0 +1,97 @@
+<!-- это элементы игрока и врага -->
+<div style="position: absolute; top: 50; left: 40; color: blue" id="igrok">(O_O)</div>
+<div style="position: absolute; top: 50; left: 400; color: red" id="vrag">[0=0]</div>
+<!-- это управляющие кнопки -->
+<button onclick="idi('vlevo')"> <- </button>
+<button onclick="idi('vverh')"> ^ </button>
+<button onclick="idi('vniz')"> V </button>
+<button onclick="idi('vpravo')"> -> </button>
+
+<script>
+// начальные координаты храним в ассоциативном массиве
+// в стилях и тут указываем одинаковые числа
+igrok = {
+    sleva: 40,
+    sverhu: 50
+}
+
+vrag = {
+    sleva: 400,
+    sverhu: 50
+}
+
+function idi(napravlenie){
+
+    // если влево, расстояние слева уменьшаем
+    if(napravlenie == 'vlevo'){
+        igrok.sleva -= 40;
+    }
+
+    // если вправо, расстояние слева увеличиваем
+    if(napravlenie == 'vpravo'){
+        igrok.sleva += 40;
+    }
+
+    if(napravlenie == 'vverh'){
+        igrok.sverhu -= 40;
+    }
+
+    if(napravlenie == 'vniz'){
+        igrok.sverhu += 40;
+    }
+
+    // теперь новые расстояния меняем в стилях элемента
+    document.getElementById('igrok').style.top = igrok.sverhu;
+    document.getElementById('igrok').style.left = igrok.sleva;
+
+    // проверим, нет ли совпадения с врагом
+    proverka();
+}
+
+function vragPodhodit(){
+    // если игрок выше, враг двигается вверх
+    if(igrok.sverhu < vrag.sverhu){
+        vrag.sverhu -= 40;
+    }
+
+    // если игрок ниже, враг вниз
+    if(igrok.sverhu > vrag.sverhu){
+        vrag.sverhu += 40;
+    }
+
+    // если игрок правее
+    if(igrok.sleva > vrag.sleva){
+        vrag.sleva += 40;
+    }
+
+    // если игрок левее
+    if(igrok.sleva < vrag.sleva){
+        vrag.sleva -= 40;
+    }
+
+    document.getElementById('vrag').style.top = vrag.sverhu;
+    document.getElementById('vrag').style.left = vrag.sleva;
+
+    proverka();
+}
+
+function proverka(){
+    // если координаты игрока и слева и справа совпадают с вражескими
+    if(igrok.sverhu == vrag.sverhu){
+        if(igrok.sleva == vrag.sleva){
+            // скрываем игрока
+            document.getElementById('igrok').style.display = "none";
+        }
+    }
+}
+
+// устанавливаем периодический запуск функции в миллисекундах
+setInterval(vragPodhodit, 2000);
+
+
+/* Пояснение к коду:
+display = "none" — изменяем свойство стиля display, и элемент скрывается. Это свойство указывает как показывать элемент: как блок (display: block), как строчный элемент (display: inline) или не показывать (display: none);
+igrok.sleva — это использование данных из ассоциативного массива. */
+
+
+</script>

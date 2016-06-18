@@ -1,0 +1,56 @@
+<div style="position: absolute; top: 0; left: 0; background: gray; width: 500; height: 360;" onmousemove="vpered()"></div>
+
+<div style="position: absolute; top: 5; left: 5; background: orange; width: 5; height: 5;" id="sharik"></div>
+
+<script>
+// начальные координаты
+sverhu = 5; //5
+sleva = 5; //5
+
+// направление движения
+vverhVniz = 1;
+vlevoVpravo = 1;
+
+// эта функция запускается много раз при движении курсора мыши над серым прямоугольником
+ function vpered(){
+    // при каждом запуске надо изменить координаты шарика
+    sverhu += vverhVniz;
+    sleva += vlevoVpravo;
+
+    // проверим, не долетел ли до стенки 
+    proverka();
+
+    // вставим новые координаты в стили шарика
+    document.getElementById('sharik').style.top = sverhu;
+    document.getElementById('sharik').style.left = sleva;
+}
+
+function proverka(){
+    // если долетел до нижней границы - меняем направление вертикального движения
+    if(sverhu == 360){
+        vverhVniz = -1;
+    }
+    // если взлетел до верхней границы - снова пусть летит вниз
+    if(sverhu == 0){
+        vverhVniz = 1;
+    }
+
+    // если долетел до правой границы - меняем направление горизонтального движения
+    if(sleva == 500){
+        vlevoVpravo = -1;
+    }
+    // если вернулся к левой границе - снова пусть летит вправо
+    if(sleva == 0){
+        vlevoVpravo = 1;
+    }
+}
+
+
+/* Пояснение к коду:
+onmousemove — этот параметр html-элементов запускает js-код в момент, когда над ним движется курсор мыши;
+vverhVniz — эта переменная может быть положительным или отрицательным числом. Это нужно для того, чтобы менять направление движения — если надо уменьшать верхний отступ, прибавляем отрицательное число;
+width: 500 — это свойство стилей задает ширину;
+height: 360 — это свойство стилей задает высоту. */
+
+
+</script>
